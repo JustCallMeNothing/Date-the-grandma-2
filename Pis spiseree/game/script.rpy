@@ -172,7 +172,11 @@ label house:
             hide wolf placeholder
             hide grandma placeholder
             "You walk around the room for a bit, hovering your eyes above anything slightly interesting."
-            "As your eyes rest on a piece of paper, sitting on the living room table. "
+            scene bg forest 
+            show redhead
+            with Dissolve(1)
+            
+            "As your eyes rest on a painting, sitting on the living room wall."
             show wolf placeholder at wolfleftsexyplace
             j "What is this?"
             hide wolf placeholder
@@ -180,6 +184,15 @@ label house:
             show redhead at rødhætteplace with longer_easein
             pause
             window show
+            g "Oh my!"
+            g "You found a picture of my sweet grandaughter, isn't she cute? She came into my life when i was at the spry age of 84, and she's the most adorable little girl you'll ever meet and i mean it!"
+            g "Our first ever road trip was when she was 3 and we went to the beach, but on our way she threw up in the car and we had to get her a napkin, it was hallarious to see her cute face covered in ice cream"
+            g "Y'know she was the angel of my life, the absolute peak, i cannot tell you how much i adore this little tiny baby, angel, cakes, poppy, sunrise, creamball, shortcake, pookiebear, cookiemonster"
+            g "babycakes, angelchild, son of god, cinnamon bun, lawyer, candybag, popsicle stick, demonchild, car-repairman, diety, redhead, organism, cult activist, teacher, hair strand, beauty"
+            g "Huff puff"
+            g "You know i can go on and on and on and on and on and on about this child for hours without end, btw im writing this in the middle of class, yknow you prolly arent gonna read this which is so fair"
+            g "shes sooooo cute i cant get enough of her eyes, face cheecks yknow all of it makes my day i cant wait until i meet her again, its gonna be so much fun oh wont you join us please"
+            j "Mhm"
 
         "Basement":
             j "I'll look around downstairs'"
