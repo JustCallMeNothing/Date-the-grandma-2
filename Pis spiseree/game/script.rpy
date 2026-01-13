@@ -15,6 +15,17 @@ transform wolfleftsexyplace:
     xalign 0
     yalign 1.0
 
+define longer_easein = MoveTransition(3.0, enter=offscreenright, enter_time_warp=_warper.easein)
+
+
+
+
+transform rødhætteplace:
+    zoom 0.5
+    xalign 0.5
+    yalign 0.5
+
+
  
 transform scarygrandmaright: 
     zoom 0.55 #adjust as required
@@ -38,14 +49,6 @@ label start:
     $affection = 0
 
 
-    "I've been thinking about changing my name"
-
-    $ player_name = renpy.input("What is your name, Magical Boy?")
-
-    $ player_name = player_name.strip()
-
-    if player_name == "":
-        $ player_name="Josh"
 
 
     # Viser baggrunden og spiller "rain.ogg" så venter et halvt sekundt
@@ -63,22 +66,29 @@ label start:
 
     # These display lines of dialogue.
 
-    j "I hate the rain, gosh it always hits at the worst time."
+    n "I hate the rain, gosh it always hits at the worst time."
 
-    j "I need to find cover until the storm passes."
+    n "I need to find cover until the storm passes."
     hide wolf placeholder
     n "You quickly run towards the centre of the forest,"
     scene cabin bg
     n "in the horizon you see a small but comfortable house"
     show wolf placeholder at wolfleftsexyplace
-    j "I’ve never seen a house out here before.. Better check it out"
+    n "I’ve never seen a house out here before.. Better check it out"
     hide wolf placeholder
     n "..."
     show wolf placeholder at wolfleftsexyplace
-    j "Anybody in there? It’s cold as hell out here"
+    n "Anybody in there? It’s cold as hell out here"
     show grandma placeholder at scarygrandmaright
     g1 "Who are you? Why are you out at this time?"
     hide grandma placeholder
+
+    $ player_name = renpy.input("My name is...")
+
+    $ player_name = player_name.strip()
+
+    if player_name == "":
+        $ player_name="Josh"
     j "I’m just a poor bypasser who got lost in the forest,"
     j "Care to let me in for the night?"
     show grandma placeholder at scarygrandmaright
@@ -151,7 +161,37 @@ label drinks:
 return
 
 label house:
-    j "go"
+    j "Could i maybe take a look around the house?"
+    g "Oh!"
+    g "Sure, just don't go into my room"
+    menu:
+        "Hell yeah, Where should i go..."
+
+        "Living Room":
+            "Maybe i should look around in here"
+            hide wolf placeholder
+            hide grandma placeholder
+            "You walk around the room for a bit, hovering your eyes above anything slightly interesting."
+            "As your eyes rest on a piece of paper, sitting on the living room table. "
+            show wolf placeholder at wolfleftsexyplace
+            j "What is this?"
+            hide wolf placeholder
+            window hide
+            show redhead at rødhætteplace with longer_easein
+            pause
+            window show
+
+        "Basement":
+            j "I'll look around downstairs'"
+        "Grandma's room'":
+            j "I'm just gonna..."
+            j "Look around."
+            $affection -= 5
+        "Attic":
+            j ""
+            
+
+
 return
 
 label bathroom:
