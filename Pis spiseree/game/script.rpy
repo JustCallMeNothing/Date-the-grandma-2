@@ -15,7 +15,7 @@ transform wolfleftsexyplace:
     xalign 0
     yalign 1.0
 
-define longer_easein = MoveTransition(3.0, enter=offscreenright, enter_time_warp=_warper.easein)
+define longer_easein = MoveTransition(0.5, enter=offscreenright, enter_time_warp=_warper.easein)
 
 
 
@@ -24,6 +24,11 @@ transform rødhætteplace:
     zoom 0.5
     xalign 0.5
     yalign 0.5
+
+transform rødhætteplacewall:
+    zoom 0.3
+    xalign 0.5
+    yalign 0.4
 
 
  
@@ -137,6 +142,7 @@ label drinks:
 
         "Water":
             j "Just some water would be nice."
+            jump drinkend
         "Coffee":
             j "Could I get some coffee?"
             g "Coffee?"
@@ -145,16 +151,28 @@ label drinks:
             g "You'd better, i don't want you staying up all night."
             j "I won't, i promise"
             $affection -= 5
+            jump drinkend
 
         "Tea":
             j "Could I get some tea?"
             g "Good choice!"
             $affection += 10
+            jump drinkend
 
         "Actually nevermind...":
             j "Actually, nevermind, I don’t think you have anything I like."
             g "???"
             jump choice
+
+return
+
+label drinkend:
+    g "Coming right up"
+    "She leaves for the kitchen, and you hear the clanging of pots and pans."
+    "A second later she comes back with a cup in hand."
+    g "Here you go"
+    j "Thanks"
+    jump endofday1
 
 
 
@@ -172,8 +190,8 @@ label house:
             hide wolf placeholder
             hide grandma placeholder
             "You walk around the room for a bit, hovering your eyes above anything slightly interesting."
-            scene bg forest 
-            show redhead
+            scene bg wall 
+            show redhead at rødhætteplacewall
             with Dissolve(1)
             
             "As your eyes rest on a painting, sitting on the living room wall."
@@ -193,20 +211,52 @@ label house:
             g "You know i can go on and on and on and on and on and on about this child for hours without end, btw im writing this in the middle of class, yknow you prolly arent gonna read this which is so fair"
             g "shes sooooo cute i cant get enough of her eyes, face cheecks yknow all of it makes my day i cant wait until i meet her again, its gonna be so much fun oh wont you join us please"
             j "Mhm"
-
+            jump endofday1
         "Basement":
             j "I'll look around downstairs'"
         "Grandma's room'":
             j "I'm just gonna..."
             j "Look around."
+            scene bg bedroom
+            "okay"
             $affection -= 5
         "Attic":
             j ""
-            
-
-
 return
 
 label bathroom:
     j "toilet attack"
+    jump endofday1  
+return
+
+
+# ----------------------------------------------------------------------------END OF DAY 1---------------------------------------------------------------------------------------------
+
+label endofday1:
+    g "*Yawn*"
+    j "Getting tired?"
+    g "Yes, we should get some sleep, the storm settles in a few days"
+    g "so for now you can just sleep on the couch"
+    g "I'll get you a blankët"
+    j "Thanks..."
+    hide grandma placeholder
+    n "Jeez everything is happening so fast"
+    n "..."
+    n "Grandma's kinda cute"
+return
+
+
+label endofday1affection:
+    g "*Yawn*"
+    j "Getting tired?"
+    g "Yes, we should get some sleep, the storm settles in a few days"
+    g "so for now..."
+    g "If you want you could sleep in my room..."
+
+    g "I'll get you a blankët"
+    j "Thanks..."
+    hide grandma placeholder
+    n "Jeez everything is happening so fast"
+    n "..."
+    n "Grandma's kinda cute"
 return
