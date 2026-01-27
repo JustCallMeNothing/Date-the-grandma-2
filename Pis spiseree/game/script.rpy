@@ -3,6 +3,17 @@
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
 
+define gui.dialogue_text_outlines = [ (3, "#000005", 0, 0) ]
+define gui.dialogue_outline_scaling = "linear"
+define gui.charaters_text_outlines = [ (3, "#000005", 0, 0) ]
+define gui.characters_outline_scaling = "linear"
+style say_label:
+    outlines [ ( 3, "#000005", 0, 0) ]
+    outline_scaling "linear"
+
+
+
+
 define j = Character("[player_name]")
 define n = Character(" ")
 define g1 = Character("???")
@@ -107,7 +118,7 @@ label start:
     hide wolf placeholder
     n "You enter grandma’s house with caution"
     scene bg livingroomnight
-    play music "sadmusic.mp3" fadeout 1
+    play music "Livelymusic.mp3" fadeout 1
     n "But as soon as you enter the house you feel a wave of comfortability"
     show grandma placeholder at grandmaright
     show wolf placeholder at wolfleftsexyplace
@@ -213,19 +224,77 @@ label house:
             j "Mhm"
             jump endofday1
         "Basement":
-            j "I'll look around downstairs'"
+            j "I'll look around downstairs"
+            g "Okay, Just dont get lost! d:"
+            scene bg basement:
+                zoom 3
+            show wolf placeholder at wolfleftsexyplace
+            "You slowly make your way down into the basement."
+            j "Jeez"
+            j "It's so dark in here"
+            "You notice a small drawer sitting in the corner of the room"
+            menu:
+                "Should i open it?"
+
+                "Yes":
+                    "The drawer creeks open and you see a old retro-style photo"
+                    j "Woah..."
+                    g "What was that dragging sound!?"
+                    "You quickly pocket the photo"
+                    j "Nothing!"
+                    jump endofday1
+                "No":
+                    "You decide not to look"
+                    jump endofday1
         "Grandma's room'":
             j "I'm just gonna..."
             j "Look around."
-            scene bg bedroom
-            "okay"
+            scene bg grandmaroom
+            show wolf placeholder at wolfleftsexyplace
+            play music "Tensesadness.mp3" fadeout 1
+            "The eerieness of the room, and the feeling that if grandma found out you were up here, colminates into a sense of terror."
+            j "God i really hope she doesn't hear me up here"
+            hide wolf placeholder
+            "You look around Grandma’s room, you see a drawer and a cabinet. "
+            show wolf placeholder at wolfleftsexyplace
+            menu:
+                "Check the drawer":
+                    "You open the drawer and see grandma's diapers"
+                    "You hastily close drawer"
+                    jump endofday1
+                "Check the cabinet":
+                    "You open the cabinet and see a little ornate box with a picture inside."
+
+                    j "Who is this guy...?"
+                    jump endofday1
+                "Go back before grandma finds out!":
+                    jump endofday1
             $affection -= 5
         "Attic":
-            j ""
+            j "Maybe i should check out the attic"
+            "You head up the stairs and open the door to the attic."
+            scene bg attic
+            show wolf placeholder at wolfleftsexyplace
+            "Immidietly you are overwhelmed by books"
+            menu:
+                "Pick up one of the books":
+                    "You pick up one of the cutesy looking books and open it"
+                    "Even though you can’t read, you see pictures of small crochet animals."
+                    j "I didn't know she liked crochet"
+                    j "Maybe i should head back"
+                "Make a mess":
+                    j "Who am i kidding, I can't even read!"
+                    "You make a mess of the place"
+
 return
 
 label bathroom:
-    j "toilet attack"
+    g "Oh sure, its just over there"
+    j "Thanks, i really have to take a dump"
+    hide wolf placeholder
+    "You hurredly run towards the bathroom"
+    "*Plopping and explosion sounds*"
+    g "oh."
     jump endofday1  
 return
 
@@ -233,11 +302,18 @@ return
 # ----------------------------------------------------------------------------END OF DAY 1---------------------------------------------------------------------------------------------
 
 label endofday1:
+    scene bg livingroomnight
+    hide wolf placeholder
+    hide grandma placeholder
+    "You make your way back to the livingroom couch"
+    
+    show grandma placeholder at scarygrandmaright
     g "*Yawn*"
+    show wolf placeholder at wolfleftsexyplace
     j "Getting tired?"
     g "Yes, we should get some sleep, the storm settles in a few days"
     g "so for now you can just sleep on the couch"
-    g "I'll get you a blankët"
+    g "I'll get you a blanket"
     j "Thanks..."
     hide grandma placeholder
     n "Jeez everything is happening so fast"
