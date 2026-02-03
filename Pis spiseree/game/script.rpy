@@ -2,6 +2,8 @@
 
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
+define config.play_channel = "audio"
+
 
 define gui.dialogue_text_outlines = [ (3, "#000005", 0, 0) ]
 define gui.dialogue_outline_scaling = "linear"
@@ -317,10 +319,17 @@ label bathroom:
     hide wolf placeholder
     play sound "Door2.mp3"
     "You hurredly run towards the bathroom"
-    play sound "Poop1.mp3"
-    play sound "Poop2.mp3"
-    play sound "Poop3.mp3"
+    stop music
+    play audio "Poop1.mp3"
+    play audio "Poop2.mp3"
+    play audio "Poop3.mp3"
+    play audio "Poop4.mp3"
+    play audio "Poop5.mp3"
+    play audio "Poop6.mp3"
     "*Plopping and explosion sounds*"
+    stop audio
+    stop music
+    stop sound
     g "oh."
     jump endofday1  
 return
@@ -331,6 +340,8 @@ return
 label endofday1:
     scene bg livingroomnight
     hide wolf placeholder
+    stop music
+    play music "Breezy.mp3"
     hide grandma placeholder
     "You make your way back to the livingroom couch"
     
