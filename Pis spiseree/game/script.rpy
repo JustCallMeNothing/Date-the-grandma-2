@@ -228,18 +228,26 @@ label house:
             g "Okay, Just dont get lost! d:"
             scene bg basement:
                 zoom 3
-            show wolf placeholder at wolfleftsexyplace
+            
             "You slowly make your way down into the basement."
+            show wolf placeholder at wolfleftsexyplace
             j "Jeez"
             j "It's so dark in here"
+            hide wolf placeholder
             "You notice a small drawer sitting in the corner of the room"
+            show wolf placeholder at wolfleftsexyplace
             menu:
                 "Should i open it?"
 
                 "Yes":
                     "The drawer creeks open and you see a old retro-style photo"
+                    show grandma old at rødhætteplace
+                    hide wolf placeholder
+                    pause
+                    show wolf placeholder at wolfleftsexyplace 
                     j "Woah..."
                     g "What was that dragging sound!?"
+                    hide grandma old
                     "You quickly pocket the photo"
                     j "Nothing!"
                     jump endofday1
