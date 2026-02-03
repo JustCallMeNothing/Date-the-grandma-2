@@ -110,6 +110,7 @@ label start:
     show grandma placeholder at scarygrandmaright
     g1 "..."
     hide grandma placeholder
+    play sound "Door1.mp3"
     n "The door slowly creeks open..."
     show grandma placeholder at grandmaright
     g "You can stay for this night"
@@ -228,7 +229,7 @@ label house:
             g "Okay, Just dont get lost! d:"
             scene bg basement:
                 zoom 3
-            
+            play sound "Door2.mp3"
             "You slowly make your way down into the basement."
             show wolf placeholder at wolfleftsexyplace
             j "Jeez"
@@ -240,6 +241,7 @@ label house:
                 "Should i open it?"
 
                 "Yes":
+                    play sound "Door2.mp3"
                     "The drawer creeks open and you see a old retro-style photo"
                     show grandma old at rødhætteplace
                     hide wolf placeholder
@@ -250,15 +252,18 @@ label house:
                     hide grandma old
                     "You quickly pocket the photo"
                     j "Nothing!"
+                    play sound "Door2.mp3"
                     jump endofday1
                 "No":
                     "You decide not to look"
+                    play sound "Door2.mp3"
                     jump endofday1
         "Grandma's room'":
             j "I'm just gonna..."
             j "Look around."
             scene bg grandmaroom
             show wolf placeholder at wolfleftsexyplace
+            play sound "Door2.mp3"
             play music "Tensesadness.mp3" fadeout 1
             "The eerieness of the room, and the feeling that if grandma found out you were up here, colminates into a sense of terror."
             j "God i really hope she doesn't hear me up here"
@@ -267,13 +272,17 @@ label house:
             show wolf placeholder at wolfleftsexyplace
             menu:
                 "Check the drawer":
+                    play sound "Door2.mp3"
                     "You open the drawer and see grandma's diapers"
                     "You hastily close drawer"
+                    play sound "Door2.mp3"
                     jump endofday1
                 "Check the cabinet":
+                    play sound "Door2.mp3"
                     "You open the cabinet and see a little ornate box with a picture inside."
 
                     j "Who is this guy...?"
+                    play sound "Door2.mp3"
                     jump endofday1
                 "Go back before grandma finds out!":
                     jump endofday1
@@ -281,18 +290,24 @@ label house:
         "Attic":
             j "Maybe i should check out the attic"
             "You head up the stairs and open the door to the attic."
+            play sound "Door2.mp3"
             scene bg attic
             show wolf placeholder at wolfleftsexyplace
             "Immidietly you are overwhelmed by books"
             menu:
                 "Pick up one of the books":
                     "You pick up one of the cutesy looking books and open it"
+                    show page placeholder at rødhætteplace
                     "Even though you can’t read, you see pictures of small crochet animals."
                     j "I didn't know she liked crochet"
                     j "Maybe i should head back"
+                    play sound "Door2.mp3"
+                    jump endofday1
                 "Make a mess":
                     j "Who am i kidding, I can't even read!"
                     "You make a mess of the place"
+                    play sound "Door2.mp3"
+                    jump endofday1
 
 return
 
@@ -300,7 +315,11 @@ label bathroom:
     g "Oh sure, its just over there"
     j "Thanks, i really have to take a dump"
     hide wolf placeholder
+    play sound "Door2.mp3"
     "You hurredly run towards the bathroom"
+    play sound "Poop1.mp3"
+    play sound "Poop2.mp3"
+    play sound "Poop3.mp3"
     "*Plopping and explosion sounds*"
     g "oh."
     jump endofday1  
@@ -315,7 +334,7 @@ label endofday1:
     hide grandma placeholder
     "You make your way back to the livingroom couch"
     
-    show grandma placeholder at scarygrandmaright
+    show grandma placeholder at grandmaright
     g "*Yawn*"
     show wolf placeholder at wolfleftsexyplace
     j "Getting tired?"
@@ -343,4 +362,14 @@ label endofday1affection:
     n "Jeez everything is happening so fast"
     n "..."
     n "Grandma's kinda cute"
+return
+
+
+
+
+label duringnight:
+
+
+
+
 return
