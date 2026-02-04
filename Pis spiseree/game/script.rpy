@@ -359,8 +359,15 @@ label house:
                 "Check the cabinet":
                     play sound "Door2.mp3"
                     "You open the cabinet and see a little ornate box with a picture inside."
-
+                    play sound "Paper.mp3"
+                    show hunter guy at rødhætteplace
                     j "Who is this guy...?"
+                    j "And why does he look so..."
+                    j "Familiar?"
+                    j "..."
+                    hide hunter guy
+                    play sound "Paper.mp3"
+                    "You put the photo back"
                     play sound "Door2.mp3"
                     jump endofday1
                 "Go back before grandma finds out!":
@@ -376,14 +383,18 @@ label house:
             menu:
                 "Pick up one of the books":
                     "You pick up one of the cutesy looking books and open it"
+                    play sound "Paper.mp3"
                     show page placeholder at rødhætteplace
                     "Even though you can’t read, you see pictures of small crochet animals."
                     j "I didn't know she liked crochet"
+                    hide page placeholder
+                    play sound "Paper.mp3"
                     j "Maybe i should head back"
                     play sound "Door2.mp3"
                     jump endofday1
                 "Make a mess":
                     j "Who am i kidding, I can't even read!"
+                    play sound "Paper.mp3"
                     "You make a mess of the place"
                     play sound "Door2.mp3"
                     jump endofday1
@@ -588,7 +599,9 @@ scene bg basement:
 play audio "Door1.mp3"
 play audio "Running.mp3"
 "You take this chance to escape, leaving everything behind. Deep into the forest, you lie down from exhaustion. "
+play audio "Runaway.mp3"
 $ renpy.movie_cutscene("runending.webm")
+stop audio
 return
 
 #                     AMBUSH
@@ -627,6 +640,7 @@ menu:
         play audio "Death.mp3"
         "The hunter with no time to spare fires his shotgun into you, tossing you across the room killing you on the spot" with sshake
         $ renpy.movie_cutscene("ednding.webm")
+        
 
     "Run away":
         jump runaway
