@@ -4,6 +4,8 @@
 # name of the character.
 define config.play_channel = "audio"
 
+# Declare the video here: A
+
 
 define gui.dialogue_text_outlines = [ (3, "#000005", 0, 0) ]
 define gui.dialogue_outline_scaling = "linear"
@@ -14,12 +16,77 @@ style say_label:
     outline_scaling "linear"
 
 
+init:
+
+    python:
+    
+        import math
+
+        class Shaker(object):
+        
+            anchors = {
+                'top' : 0.0,
+                'center' : 0.5,
+                'bottom' : 1.0,
+                'left' : 0.0,
+                'right' : 1.0,
+                }
+        
+            def __init__(self, start, child, dist):
+                if start is None:
+                    start = child.get_placement()
+                #
+                self.start = [ self.anchors.get(i, i) for i in start ]  # central position
+                self.dist = dist    # maximum distance, in pixels, from the starting point
+                self.child = child
+                
+            def __call__(self, t, sizes):
+                # Float to integer... turns floating point numbers to
+                # integers.                
+                def fti(x, r):
+                    if x is None:
+                        x = 0
+                    if isinstance(x, float):
+                        return int(x * r)
+                    else:
+                        return x
+
+                xpos, ypos, xanchor, yanchor = [ fti(a, b) for a, b in zip(self.start, sizes) ]
+
+                xpos = xpos - xanchor
+                ypos = ypos - yanchor
+                
+                nx = xpos + (1.0-t) * self.dist * (renpy.random.random()*2-1)
+                ny = ypos + (1.0-t) * self.dist * (renpy.random.random()*2-1)
+
+                return (int(nx), int(ny), 0, 0)
+        
+        def _Shake(start, time, child=None, dist=100.0, **properties):
+
+            move = Shaker(start, child, dist=dist)
+        
+            return renpy.display.layout.Motion(move,
+                          time,
+                          child,
+                          add_sizes=True,
+                          **properties)
+
+        Shake = renpy.curry(_Shake)
+    #
+
+#
+
+
+
+init:
+    $ sshake = Shake((0, 0, 0, 0), 1.0, dist=15)
 
 
 define j = Character("[player_name]")
 define n = Character(" ")
 define g1 = Character("???")
 define g = Character("Grandma")
+define h = Character("Hunter")
 
 # Transform er størrelsen på de forskellige sprites
 
@@ -28,9 +95,19 @@ transform wolfleftsexyplace:
     xalign 0
     yalign 1.0
 
+transform hunterscarysex: 
+    zoom 0.95 #adjust as required
+    xalign 0.05
+    yalign 1.0
+
+transform hunterscarysex2: 
+    zoom 0.95 #adjust as required
+    xalign 0.5
+    yalign 1.0
+
 define longer_easein = MoveTransition(0.5, enter=offscreenright, enter_time_warp=_warper.easein)
 
-
+image example = Movie(play="ednding.webm", size=(1920,1080), loop=False, xalign=0.10, yalign=0.10)
 
 
 transform rødhætteplace:
@@ -222,7 +299,7 @@ label house:
             g "Y'know she was the angel of my life, the absolute peak, i cannot tell you how much i adore this little tiny baby, angel, cakes, poppy, sunrise, creamball, shortcake, pookiebear, cookiemonster"
             g "babycakes, angelchild, son of god, cinnamon bun, lawyer, candybag, popsicle stick, demonchild, car-repairman, diety, redhead, organism, cult activist, teacher, hair strand, beauty"
             g "Huff puff"
-            g "You know i can go on and on and on and on and on and on about this child for hours without end, btw im writing this in the middle of class, yknow you prolly arent gonna read this which is so fair"
+            g "You know i can go on and on and on and on and on and on about this child for hours without end, and shes the best in the whole entire universal godversal world, no one is as cute as her my cheesecake uf undying happiness i really do belive everything i've ever done is for this little girls little hearts because she's just the best isn't she oh my goodness look at the time its too late! btw im writing this in the middle of class, yknow you prolly arent gonna read this which is so fair"
             g "shes sooooo cute i cant get enough of her eyes, face cheecks yknow all of it makes my day i cant wait until i meet her again, its gonna be so much fun oh wont you join us please"
             j "Mhm"
             jump endofday1
@@ -357,6 +434,10 @@ label endofday1:
     n "Jeez everything is happening so fast"
     n "..."
     n "Grandma's kinda cute"
+    show grandma placeholder at grandmaright
+    g "Here, you can sleep on the couch for tonight."
+    stop music
+    jump duringnight
 return
 
 
@@ -373,14 +454,182 @@ label endofday1affection:
     n "Jeez everything is happening so fast"
     n "..."
     n "Grandma's kinda cute"
+    stop music
+    jump duringnight
 return
 
 
 
 
 label duringnight:
+    scene bg basement:
+                zoom 50
+    play music "Heartbeat.mp3"
+    pause
+    j "Huiff puff"
+    "You feel a strange sensation during your slumber "
+    j "Must... hhmn"
+    j "Eat..."
+    "Your stomach growls in anticipation"
+    j "ah, eat... eat... cannot.. Ngh"
+    j "Food. Where is food..."
+    j "..."
+    j "Old lady..."
+    "At the thought of the sweet old grandma, your chest burst into a sudden pain."
+    "But you managed to keep yourself calm during the night. "
+    stop music
+    jump morningtime
+
+return
 
 
+label morningtime:
+    pause
+    "Your eyes slowly creep open"
+    scene bg livingroom
+    play music "Breezy.mp3"
+    "*You hear Grandma out in the kitchen*"
+    show wolf placeholder at wolfleftsexyplace
+    j "Jeez, my eyes are so heavy"
+    j "Grandma was a lifesaver. If it weren't for her generosity i would have damn near frozen to death."
+    hide wolf placeholder
+    "exhausted you crawl out of bed to greet grandma in the morning"
+    show grandma placeholder at grandmaright
+    g "Sleep well?"
+    show wolf placeholder at wolfleftsexyplace
+
+    menu:
+        "How did i sleep..."
+
+
+        "Pillow was not too comfortable but it was alright nonetheless":
+            g "I’m sorry, it was all i had ill make sure to make guest visits more comfortable in the future, but nobody visits me other than my sweet granddaughter"
+            jump continuation1
+
+        "The couch sucked; couldn’t you have gotten me a mattress?":
+            g "You could have slept out in the rain if it was so bad!"
+            jump continuation1
+
+        "I did! How about you?":
+            g "That’s splendid. I slept well myself darling"
+            jump continuation1
+return
+
+label continuation1:
+    g "Well, a new day is upon us, when do you plan on heading out?"
+    g "you can stay till lunch if you’d like, i prepared some extra yesterday, i hope you like eggs as i put a lot of them in the sandwiches, from my granddaughter's chicken coop too! I think their quite deli- "
+    stop music
+    hide wolf placeholder
+    hide grandma placeholder
+    play audio "HunterDoor.mp3"
+    scene bg door:
+        zoom 1.7, xalign 0.5, yalign 0.5
+    pause
+    play music "Tense.mp3"
+    show wolf placeholder at wolfleftsexyplace
+    j "Who is that??!"
+    show grandma placeholder at grandmaright
+    g "Oh gosh, i didn’t expect a visit from him today, quickly hide!!"
+
+    menu:
+        "Shit! Should i listen?"
+
+        "Hide":
+            hide wolf placeholder
+            "You follow grandma’s advice and quickly climb underneath the staircase"
+            show hunter at hunterscarysex
+            play sound "Door1.mp3"
+            h "I’m home sweetie did ya make breakfast yet."
+            g "Oh yes... I prepared some apple pie just upstairs.."
+            g "How did your morning hunt go?"
+            h "It went how it usually does, funny thing-"
+            
+            
+            play audio "Burp.mp3"
+            h "*Burp*" with sshake
+            h "We almost caught ya a lope of werewolf meat yesterday, but he trailed off before we could get a good angle."
+            g "Why were you hunting him, I've heard werewolves are quite nice. "
+            h "It’s a werewolf, how are they nice, they eat us?!"
+            show hunter at hunterscarysex2
+            hide grandma placeholder
+            "The hunter frustrated with the conversation, moves up the staircase towards the delicious apple pie. "
+
+            menu:
+                "I gotta do something fast!"
+
+                "Run away":
+                    jump runaway
+                "Ambush":
+                    jump ambushh
+
+
+        "Confront":
+            "hi"
+
+        "Devour":
+            "hello"
+
+    $ renpy.movie_cutscene("ednding.webm")
+    n "The end"
+
+
+return
+
+
+# --------------------------------------------------------------------------------ENDINGS-----------------------------------------------------------------------------------------------
+
+#                     RUN AWAY
+label runaway:
+stop music
+hide hunter
+hide grandma placeholder
+scene bg basement:
+                zoom 50
+play audio "Door1.mp3"
+play audio "Running.mp3"
+"You take this chance to escape, leaving everything behind. Deep into the forest, you lie down from exhaustion. "
+$ renpy.movie_cutscene("runending.webm")
+return
+
+#                     AMBUSH
+
+label ambushh:
+show wolf placeholder at wolfleftsexyplace
+"You lunge towards the hunter swiping your claws at him."
+play audio "Hit1.mp3"
+menu:
+    "He groans in pain, its clear he will bleed out like this. "
+    with sshake
+    "Excecute":
+        j "No one disturbs the peace in this house. Grandma deserves better you brute"
+        play audio "Hit1.mp3"
+        pause 0.5
+        hide hunter
+        play audio "Death.mp3"
+        stop music
+        "You mercilessly swipe your claws one more time, and the massive hunter falls flat over." with sshake
+        show grandma placeholder at grandmaright
+        g "..."
+        play music "Tensesadness.mp3"
+        j "im so sorry grandma i-"
+        j "i didnt want it to end this way."
+        g "its fine... it was self defense, had you not hidden he wouldn’t have hesitated either, im just happy its over."
+        j "ehm.."
+        j "would you mind if i stay for a bit longer?"
+        g "Not at all. Your company is the best ive had in years"
+
+    "Spare":
+        j "Look! i jus-"
+        stop music
+        play audio "Shotgun.mp3"
+        pause(1)
+        hide wolf placeholder
+        play audio "Death.mp3"
+        "The hunter with no time to spare fires his shotgun into you, tossing you across the room killing you on the spot" with sshake
+        $ renpy.movie_cutscene("ednding.webm")
+
+    "Run away":
+        jump runaway
 
 
 return
