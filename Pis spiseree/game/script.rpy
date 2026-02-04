@@ -352,7 +352,11 @@ label house:
             menu:
                 "Check the drawer":
                     play sound "Door2.mp3"
+                    show diapers at rødhætteplace
                     "You open the drawer and see grandma's diapers"
+                    pause 0.5
+                    hide diapers
+                    play sound "Door1.mp3"
                     "You hastily close drawer"
                     play sound "Door2.mp3"
                     jump endofday1
