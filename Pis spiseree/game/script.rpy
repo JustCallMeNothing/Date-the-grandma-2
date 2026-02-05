@@ -580,6 +580,7 @@ label continuation1:
 
         "Confront":
             "hi"
+            $ renpy.movie_cutscene("hunterending.webm")
 
         "Devour":
             "hello"
