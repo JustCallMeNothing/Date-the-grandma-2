@@ -579,14 +579,74 @@ label continuation1:
 
 
         "Confront":
-            "hi"
-            $ renpy.movie_cutscene("hunterending.webm")
+            "Instead of following grandma’s advice you sprint towards the door, shouting-"
+            j "WAIT!!"
+            show hunter at hunterscarysex2
+            play sound "Door1.mp3"
+            "The hunter opens the door with a big smile that, instantly turns into a frightened frown."
+            h "What is a damned werewolf doing in this house?! Run away grandma, its not safe!!"
+            j "I dont want to hurt anyone i-"
+            stop music
+            play audio "Shotgun.mp3"
+            pause(1)
+            hide wolf placeholder
+            play audio "Death.mp3"
+            "The werewolf is cut off by a shotgun blast to the stomach, tossing him across the room. Dead." with sshake
+            $ renpy.movie_cutscene("ednding.webm")
+
+
 
         "Devour":
-            "hello"
+            "Visions of red flash in front of you, your hunger has finally caught up."
+            "And you cannot stop yourself, as much as you care for grandma a werewolf is a werewolf, and it needs to hunt."
+            hide grandma placeholder
+            "You devour grandma whole as she tries screaming out, she doesn’t get the chance to before she is completely consumed."
+            play audio "Door2.mp3"
+            show hunter at hunterscarysex2
+            "The hunter opens the door, with a smile that quickly turns into a frightened frown"
+            h "where is grandma?! What have you done you ferocious beast..!"
+            "He readies his aim, about to pull the trigger"
+            
+            menu:
+                "I'm about to get blasted! What do i do!?'"
 
-    $ renpy.movie_cutscene("ednding.webm")
-    n "The end"
+                "Seduction":
+                    stop music
+                    j "Would you wanna find out big boy?"
+                    play music "Romantic.mp3" fadeout 1.0 fadein 1.0
+                    j "You've been hunting for a while, how about some pie to calm you down while i explain whats going on~"
+                    "You give him a flirty wink whilst walking up the stairs confidently"
+                    hide wolf placeholder
+                    "Completely stunned, but also curious the hunter follows suspiciously."
+                    scene bg grandmaroom:
+                        zoom 1.4 xalign 0.7 yalign 0.8
+                    play audio "Door1.mp3"
+                    show wolf placeholder at wolfleftsexyplace
+                    "You reach grandmas room, sending a friendly wave to the hunter, as you sit on the bed and start eating fresh apple pie."
+                    show hunter at hunterscarysex2
+                    "The hunter calms some of his nerves and sits down to eat with you"
+                    h "This is very sweet but i need you to tell me what is going on."
+                    j "Grandma is visiting riding hood for the weekend, im a longtime friend of hers and needed to stay"
+                    h "But she did not tell me about a handsome fellow like you would show up."
+                    h "Well the muscles come from the hunting, don’t worry i would never hurt a werewolf!"
+                    "You see the hunter calm his nerves, he put his shotgun on the ground as he shoves a giant spoon of pie into his mouth, with a mouth full of food he mutters"
+                    h "This is grandmas signature pie did she teach you the recipe, it is so good!"
+                    j "Thank you, i made it for myself, but i love company tell me more about yourself."
+                    stop music
+                    scene bg basement
+                    $ renpy.movie_cutscene("hunterending.webm")
+
+
+                "Fight":
+                    "You lunge at the hunter"
+                    stop music
+                    play audio "Shotgun.mp3"
+                    pause(1)
+                    hide wolf placeholder
+                    play audio "Death.mp3"
+                    "He quickly reacts with a fresh shotgun shell to the stomach instantly killing you." with sshake
+                    $ renpy.movie_cutscene("ednding.webm")
+
 
 
 return
